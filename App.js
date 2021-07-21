@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { Button, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Switch, Text, TouchableOpacity, View, TextInput } from 'react-native';
 export default function App() {
+  const [valMin, setMin] = useState();
+  const [valMax, setMax] = useState();
   const [rand, setRand] = useState();
   const [mode,setMode] = useState(false);
   const handleRand = () => {
@@ -8,17 +10,25 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      
-      <Text style={styles.title}>Random Number</Text>
-      <View style={styles.randArea}>
-        <TouchableOpacity
-          onPress={()=>handleRand()}
-          style={styles.randButton}>
-          <Text style={styles.randText}>Press</Text>
-        </TouchableOpacity>
+      <View style={styles.mainFunction}>
+        <Text style={styles.title}>Random Number</Text>
+        <TextInput
+            style={styles.minText}
+            placeholder='min'
+            // keyboardType= 'number-pad'
+            onChangeText={(vakMax) => setMin} />
+        <View style={styles.randArea}>
+          <TouchableOpacity
+            onPress={()=>handleRand()}
+            style={styles.randButton}>
+            <Text style={styles.randText}>Press</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.result}>{rand}</Text>
       </View>
-      <Text style={styles.result}>{rand}</Text>
-      <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch>
+      <View style={styles.changeMode}>
+        <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch>
+      </View>
     </View>
   );
 }
@@ -33,6 +43,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
+  mainFunction: {
+    alignItems: 'center',
+    height: '80%',
+    width: '100%',
+    // backgroundColor: 'blue'
+  },
   title:{  
     paddingTop: '20%',
     fontSize: 30,
@@ -41,6 +57,7 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     width: '30%',
     height: '10%',
+    backgroundColor: 'blue'
   },
   randButton:{ 
     backgroundColor: 'green',
@@ -56,5 +73,20 @@ const styles = StyleSheet.create({
   result:{
     marginTop: '50%',
     fontSize: 40
+  },
+  changeMode:{
+    width: '100%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'red'
+  },
+  minText:{
+    width: '30%',
+    height:'5%',
+    borderColor: 'black',
+    borderWidth: 1,
+    marginTop: '10%',
+    paddingHorizontal: 10
   }
 });
