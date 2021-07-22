@@ -1,92 +1,126 @@
 import React, {useState} from 'react';
-import { Button, StyleSheet, Switch, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
 export default function App() {
-  const [valMin, setMin] = useState();
-  const [valMax, setMax] = useState();
-  const [rand, setRand] = useState();
+  const [valMin, setMin] = useState(0);
+  const [valMax, setMax] = useState(100);
+  const [rand, setRand] = useState(null);
   const [mode,setMode] = useState(false);
-  const handleRand = () => {
-    setRand(Math.floor(Math.random()*100));
+  const handleRand = (valMin,valMax) => {
+    valMin = Math.ceil(valMin);
+    valMax = Math.floor(valMax) + 1;
+    setRand(Math.floor(Math.random() * (valMax - valMin) + valMin));
+    console.log(valMax)
   }
+
+  const pressHandler = () => {
+    
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.mainFunction}>
         <Text style={styles.title}>Random Number</Text>
-        <TextInput
+        <View style={styles.maxminArea}>
+          <TextInput
             style={styles.minText}
             placeholder='min'
             // keyboardType= 'number-pad'
-            onChangeText={(vakMax) => setMin} />
-        <View style={styles.randArea}>
+            onChangeText={(val) => setMin(val)} />
+          <TextInput
+            style={styles.maxText}
+            placeholder='max'
+            onChangeText={(val)=> setMax(val)}
+          />
+        </View>
           <TouchableOpacity
-            onPress={()=>handleRand()}
+            onPress={()=>handleRand(valMin,valMax)}
             style={styles.randButton}>
             <Text style={styles.randText}>Press</Text>
           </TouchableOpacity>
-        </View>
         <Text style={styles.result}>{rand}</Text>
       </View>
       <View style={styles.changeMode}>
-        <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch>
+        {/* <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch> */}
+        <Button title = 'alp' onPress={pressHandler}></Button>
       </View>
     </View>
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    
+    alignItems: 'center', 
   },
+
   mainFunction: {
     alignItems: 'center',
     height: '80%',
     width: '100%',
-    // backgroundColor: 'blue'
+    // backgroundColor: 'red'
   },
+
   title:{  
     paddingTop: '20%',
     fontSize: 30,
   },
-  randArea:{
-    marginTop: '20%',
-    width: '30%',
-    height: '10%',
-    backgroundColor: 'blue'
+
+  maxminArea:{
+    // backgroundColor:'yellow',
+    flexDirection: 'row',
+    height: '20%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // alignContent: 'center',
   },
+
   randButton:{ 
     backgroundColor: 'green',
-    width: '100%',
-    height: '100%',
+    width: '30%',
+    height: '10%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 15,
+    borderRadius: 15
   },
+
   randText:{
     color: 'white',
     fontSize: 25
   },
+
   result:{
-    marginTop: '50%',
+    marginTop: '40%',
     fontSize: 40
   },
+
   changeMode:{
     width: '100%',
     height: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'red'
+
   },
   minText:{
     width: '30%',
-    height:'5%',
+    height:'40%',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: '10%',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    marginHorizontal: 30,
+    borderRadius: 15
+
+  },
+  maxText:{
+    width: '30%',
+    height:'40%',
+    borderColor: 'black',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginHorizontal: 30,
+    borderRadius: 15
   }
 });
