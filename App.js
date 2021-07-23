@@ -2,14 +2,15 @@ import React, {useState} from 'react';
 import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Alphabete from './Alphabete';
+import Numbers from './Numbers';
 
 
 const Stack = createStackNavigator();
-function screen1() {
+function screen1({navigation}) {
   const [valMin, setMin] = useState(0);
   const [valMax, setMax] = useState(100);
   const [rand, setRand] = useState(0);
-  const [mode,setMode] = useState(false);
   const handleRand = (valMin,valMax) => {
     valMin = Math.ceil(valMin);
     valMax = Math.floor(valMax) + 1;
@@ -17,7 +18,7 @@ function screen1() {
   }
 
   const pressHandler = () => {
-    
+    navigation.navigate('screenB');
   }
 
   return (
@@ -45,7 +46,6 @@ function screen1() {
         {/* <Text style={styles.result}>{rand}</Text> */}
       </View>
       <View style={styles.changeMode}>
-        {/* <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch> */}
         <Button title = 'alp' onPress={pressHandler}></Button>
       </View>
     </View>
@@ -55,10 +55,14 @@ function screen1() {
 export default function App(){
   return (
     <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator>{/*screenOptions={{header: () => null}}> */}
             <Stack.Screen
               name = 'Screen1'
               component = {screen1}>
+            </Stack.Screen>
+            <Stack.Screen
+              name = 'screenB'
+              component = {Alphabete}>
             </Stack.Screen>
         </Stack.Navigator>
     </NavigationContainer>
