@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+const Stack = createStackNavigator();
+function screen1() {
   const [valMin, setMin] = useState(0);
   const [valMax, setMax] = useState(100);
-  const [rand, setRand] = useState(null);
+  const [rand, setRand] = useState(0);
   const [mode,setMode] = useState(false);
   const handleRand = (valMin,valMax) => {
     valMin = Math.ceil(valMin);
     valMax = Math.floor(valMax) + 1;
     setRand(Math.floor(Math.random() * (valMax - valMin) + valMin));
-    console.log(valMax)
   }
 
   const pressHandler = () => {
@@ -20,6 +24,7 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.mainFunction}>
         <Text style={styles.title}>Random Number</Text>
+        <Text style={styles.result}>{rand}</Text>
         <View style={styles.maxminArea}>
           <TextInput
             style={styles.minText}
@@ -37,7 +42,7 @@ export default function App() {
             style={styles.randButton}>
             <Text style={styles.randText}>Press</Text>
           </TouchableOpacity>
-        <Text style={styles.result}>{rand}</Text>
+        {/* <Text style={styles.result}>{rand}</Text> */}
       </View>
       <View style={styles.changeMode}>
         {/* <Switch value={mode} onValueChange={()=>setMode((value) => !value)}></Switch> */}
@@ -47,6 +52,18 @@ export default function App() {
   );
 }
 
+export default function App(){
+  return (
+    <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen
+              name = 'Screen1'
+              component = {screen1}>
+            </Stack.Screen>
+        </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -58,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '80%',
     width: '100%',
-    // backgroundColor: 'red'
+    // backgroundColor: 'yellow'
   },
 
   title:{  
@@ -67,13 +84,12 @@ const styles = StyleSheet.create({
   },
 
   maxminArea:{
-    // backgroundColor:'yellow',
     flexDirection: 'row',
     height: '20%',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    // alignContent: 'center',
+    marginTop: '10%'
   },
 
   randButton:{ 
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   result:{
-    marginTop: '40%',
+    marginTop: '25%',
     fontSize: 40
   },
 
