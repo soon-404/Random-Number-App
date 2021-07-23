@@ -2,145 +2,108 @@ import React, {useState} from 'react';
 import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Alphabete from './Alphabete';
+import Alphabet from './Alphabet';
 import Numbers from './Numbers';
+import Day7 from './Day7';
 
 
 const Stack = createStackNavigator();
-function screen1({navigation}) {
-  const [valMin, setMin] = useState(0);
-  const [valMax, setMax] = useState(100);
-  const [rand, setRand] = useState(0);
-  const handleRand = (valMin,valMax) => {
-    valMin = Math.ceil(valMin);
-    valMax = Math.floor(valMax) + 1;
-    setRand(Math.floor(Math.random() * (valMax - valMin) + valMin));
-  }
-
-  const pressHandler = () => {
-    navigation.navigate('screenB');
-  }
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.mainFunction}>
-        <Text style={styles.title}>Random Number</Text>
-        <Text style={styles.result}>{rand}</Text>
-        <View style={styles.maxminArea}>
-          <TextInput
-            style={styles.minText}
-            placeholder='min'
-            // keyboardType= 'number-pad'
-            onChangeText={(val) => setMin(val)} />
-          <TextInput
-            style={styles.maxText}
-            placeholder='max'
-            onChangeText={(val)=> setMax(val)}
-          />
-        </View>
-          <TouchableOpacity
-            onPress={()=>handleRand(valMin,valMax)}
-            style={styles.randButton}>
-            <Text style={styles.randText}>Press</Text>
-          </TouchableOpacity>
-        {/* <Text style={styles.result}>{rand}</Text> */}
-      </View>
-      <View style={styles.changeMode}>
-        <Button title = 'alp' onPress={pressHandler}></Button>
-      </View>
-    </View>
-  );
-}
 
 export default function App(){
   return (
     <NavigationContainer>
-        <Stack.Navigator>{/*screenOptions={{header: () => null}}> */}
+        <Stack.Navigator screenOptions={{header: () => null}}>
             <Stack.Screen
-              name = 'Screen1'
-              component = {screen1}>
+              name = 'screenMainMenu'
+              component = {MainMenu}>
             </Stack.Screen>
+           
             <Stack.Screen
-              name = 'screenB'
-              component = {Alphabete}>
+              name = 'screenNumbers'
+              component = {Numbers}>
             </Stack.Screen>
+
+            <Stack.Screen
+              name = 'screenAlphabet'
+              component = {Alphabet}>
+            </Stack.Screen>
+
+            <Stack.Screen
+              name = 'screenDay7'
+              component = {Day7}>
+            </Stack.Screen>
+
         </Stack.Navigator>
     </NavigationContainer>
   )
 }
+
+function MainMenu({navigation}) {
+  const pressAlphabet = () => {
+    navigation.navigate('screenAlphabet');
+  }
+
+  const pressNumber = () => {
+    navigation.navigate('screenNumbers');
+  }
+
+  const pressDay7 = () => {
+    navigation.navigate('screenDay7');
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.appName}>RANDOMY</Text>
+      <TouchableOpacity
+            onPress={pressNumber}
+            style={styles.buttonFunction}>
+            <Text style={styles.buttonText}>Number</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+            onPress={pressAlphabet}
+            style={styles.buttonFunction}>
+            <Text style={styles.buttonText}>Alphabet</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+            onPress={pressDay7}
+            style={styles.buttonFunction}>
+            <Text style={styles.buttonText}>7 Day</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+            // onPress={pressAlphabet}
+            style={styles.buttonFunction}>
+            <Text style={styles.buttonText}>Custom</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center', 
   },
-
-  mainFunction: {
+  appName: {
+    marginTop: 65,
+    fontSize: 35,
+    marginBottom: 10,
+  },
+  buttonFunction: {
+    backgroundColor: 'blue',
+    width: '80%',
+    height: '8%',
     alignItems: 'center',
-    height: '80%',
-    width: '100%',
-    // backgroundColor: 'yellow'
-  },
-
-  title:{  
-    paddingTop: '20%',
-    fontSize: 30,
-  },
-
-  maxminArea:{
-    flexDirection: 'row',
-    height: '20%',
-    width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '10%'
-  },
-
-  randButton:{ 
-    backgroundColor: 'green',
-    width: '30%',
-    height: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 15,
+    marginTop: 10,
     borderRadius: 15
   },
-
-  randText:{
+  buttonText: {
     color: 'white',
-    fontSize: 25
+    fontSize: 20
   },
-
-  result:{
-    marginTop: '25%',
-    fontSize: 40
-  },
-
-  changeMode:{
-    width: '100%',
-    height: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'red'
-
-  },
-  minText:{
-    width: '30%',
-    height:'40%',
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginHorizontal: 30,
-    borderRadius: 15
-
-  },
-  maxText:{
-    width: '30%',
-    height:'40%',
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginHorizontal: 30,
-    borderRadius: 15
-  }
 });

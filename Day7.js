@@ -3,14 +3,16 @@ import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } f
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-export default function Numbers({navigation}) {
-  const [valMin, setMin] = useState(0);
-  const [valMax, setMax] = useState(100);
-  const [rand, setRand] = useState(0);
-  const handleRand = (valMin,valMax) => {
-    valMin = Math.ceil(valMin);
-    valMax = Math.floor(valMax) + 1;
-    setRand(Math.floor(Math.random() * (valMax - valMin) + valMin));
+export default function Day7({navigation}) {
+
+  const [rand, setRand] = useState('Monday');
+  const [colorDay, setColorDay] = useState('yellow')
+  const handleRand = () => {
+    var day = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    var color = ['yellow','pink','green','orange','blue','purple','red']
+    var result = Math.floor(Math.random() * (7 - 0) + 0)
+    setColorDay(color[result])
+    setRand(day[result]);
   }
 
   const pressHandler = () => {
@@ -20,21 +22,14 @@ export default function Numbers({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.mainFunction}>
-        <Text style={styles.title}>Random Number</Text>
-        <Text style={styles.result}>{rand}</Text>
-        <View style={styles.maxminArea}>
-          <TextInput
-            style={styles.minText}
-            placeholder='min'
-            onChangeText={(val) => setMin(val)} />
-          <TextInput
-            style={styles.maxText}
-            placeholder='max'
-            onChangeText={(val)=> setMax(val)}
-          />
+       
+        <Text style={styles.title}>Random 7 Day</Text>
+        <View style={styles.colorText}>
+          <View style={squareColor(colorDay)}></View>
+          <Text style={styles.result}>{rand}</Text>
         </View>
           <TouchableOpacity
-            onPress={()=>handleRand(valMin,valMax)}
+            onPress={()=>handleRand()}
             style={styles.randButton}>
             <Text style={styles.randText}>Press</Text>
           </TouchableOpacity>
@@ -66,22 +61,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
 
-  maxminArea:{
-    flexDirection: 'row',
-    height: '20%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '10%'
-  },
-
   randButton:{ 
     backgroundColor: 'green',
     width: '30%',
     height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: '60%',
     borderRadius: 15
   },
 
@@ -91,7 +77,7 @@ const styles = StyleSheet.create({
   },
 
   result:{
-    marginTop: '25%',
+    // marginTop: '45%',
     fontSize: 40
   },
 
@@ -101,27 +87,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'red'
-
   },
-  minText:{
-    width: '30%',
-    height:'40%',
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginHorizontal: 30,
-    borderRadius: 15,
-    fontSize: 20
-
-  },
-  maxText:{
-    width: '30%',
-    height:'40%',
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginHorizontal: 30,
-    borderRadius: 15,
-    fontSize: 20
-  }
+   colorText:{
+    flexDirection: 'row',
+    // backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '35%'
+   }
 });
+
+const squareColor = (option) => {
+    return  {
+        width: 30,
+        height: 30,     
+        backgroundColor: option,
+        borderRadius: '15%',
+        marginRight: '5%',
+        borderColor: 'black',
+        borderWidth: 1
+        
+    }
+}
+
+
