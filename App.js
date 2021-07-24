@@ -10,6 +10,7 @@ import Day7 from './Day7';
 const Stack = createStackNavigator();
 
 export default function App(){
+  const [func,setfunc] = useState();
   return (
     <NavigationContainer>
         <Stack.Navigator screenOptions={{header: () => null}}>
@@ -25,7 +26,8 @@ export default function App(){
 
             <Stack.Screen
               name = 'screenAlphabet'
-              component = {Alphabet}>
+              component = {Alphabet}
+              initialParams = {{ bg : 'grey'}}>
             </Stack.Screen>
 
             <Stack.Screen
@@ -54,29 +56,40 @@ function MainMenu({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.appName}>RANDOMY</Text>
-      <TouchableOpacity
-            onPress={pressNumber}
-            style={styles.buttonFunction}>
-            <Text style={styles.buttonText}>Number</Text>
-      </TouchableOpacity>
+      <View style={styles.listFunc}>
+        <TouchableOpacity
+          onPress={pressNumber}
+          style={styles.buttonFunction}>
+          <Text style={styles.buttonText}>Number</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-            onPress={pressAlphabet}
-            style={styles.buttonFunction}>
-            <Text style={styles.buttonText}>Alphabet</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={pressAlphabet}
+          style={styles.buttonFunction}>
+          <Text style={styles.buttonText}>Alphabet</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-            onPress={pressDay7}
-            style={styles.buttonFunction}>
-            <Text style={styles.buttonText}>7 Day</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={pressDay7}
+          style={styles.buttonFunction}>
+          <Text style={styles.buttonText}>7 Day</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-            // onPress={pressAlphabet}
-            style={styles.buttonFunction}>
-            <Text style={styles.buttonText}>Custom</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          // onPress={pressAlphabet}
+          style={styles.buttonFunction}>
+         <Text style={styles.buttonText}>Custom</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.add}>
+        
+      </View>
+      <View style={styles.setting}>
+        <TouchableOpacity style={styles.white}></TouchableOpacity>
+        <TouchableOpacity style={styles.dark}></TouchableOpacity>
+
+      </View>
+
     </View>
   );
 }
@@ -96,14 +109,47 @@ const styles = StyleSheet.create({
   buttonFunction: {
     backgroundColor: 'blue',
     width: '80%',
-    height: '8%',
+    height: '15%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 15,
     borderRadius: 15
   },
   buttonText: {
     color: 'white',
     fontSize: 20
   },
+  listFunc: {
+    // backgroundColor: 'green',
+    width: '100%',
+    height: '60%',
+    alignItems: 'center'
+    
+  },
+  add: {
+    // backgroundColor: 'yellow',
+    width: '100%',
+    height: '15%'
+  },
+  setting: {
+    // backgroundColor: 'red',
+    width: '100%',
+    height: '7%',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  white: {
+    backgroundColor: 'grey',
+    borderRadius: 10,
+    width: '10%',
+    height: '60%',
+    marginLeft: '5%',
+  },
+  dark: {
+    backgroundColor: 'black',
+    borderRadius: 10,
+    width: '10%',
+    height: '60%',
+    marginLeft: '5%',
+  }
 });

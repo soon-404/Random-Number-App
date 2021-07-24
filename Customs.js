@@ -3,27 +3,31 @@ import { StyleSheet, Switch, Text, TouchableOpacity, View, TextInput, Button } f
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-export default function Alphabet({navigation,route}) {
+export default function Customs({navigation}) {
 
-  const [rand, setRand] = useState('A-Z');
+  const [rand, setRand] = useState('Monday');
+  const [colorDay, setColorDay] = useState('yellow')
   const handleRand = () => {
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var result = characters[Math.floor(Math.random() * (26 - 0) + 0)]
-    setRand(result);
+    var day = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    var color = ['yellow','pink','green','orange','blue','purple','red']
+    var result = Math.floor(Math.random() * (7 - 0) + 0)
+    setColorDay(color[result])
+    setRand(day[result]);
   }
 
   const pressHandler = () => {
     navigation.goBack('screenMainMenu');
   }
 
-  const {bg} = route.params
-
   return (
     <View style={styles.container}>
       <View style={styles.mainFunction}>
-        <Text style={styles.title}>Random Alphabet</Text>
-        <Text>{bg}</Text>
-        <Text style={styles.result}>{rand}</Text>
+       
+        <Text style={styles.title}>Customs Random</Text>
+        <View style={styles.colorText}>
+          <View style={squareColor(colorDay)}></View>
+          <Text style={styles.result}>{rand}</Text>
+        </View>
           <TouchableOpacity
             onPress={()=>handleRand()}
             style={styles.randButton}>
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
   },
 
   result:{
-    marginTop: '45%',
+    // marginTop: '45%',
     fontSize: 40
   },
 
@@ -83,8 +87,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'red'
-
   },
+   colorText:{
+    flexDirection: 'row',
+    // backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '35%'
+   }
 });
+
+const squareColor = (option) => {
+    return  {
+        width: 30,
+        height: 30,     
+        backgroundColor: option,
+        borderRadius: '15%',
+        marginRight: '5%',
+        borderColor: 'black',
+        borderWidth: 1
+        
+    }
+}
 
 
